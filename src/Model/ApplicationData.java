@@ -1,12 +1,12 @@
 package Model;
 
-import java.util.Map;
-
+import java.util.ArrayList;
 /**
  * Created by yketd on 1-9-2016.
  */
-public class ApplicationData {
-    private Map<String, User> userdata;
+public class ApplicationData
+{
+    private ArrayList<User> users = new ArrayList<>();
 
     private static ApplicationData ourInstance = new ApplicationData();
 
@@ -14,7 +14,9 @@ public class ApplicationData {
         return ourInstance;
     }
 
-    private ApplicationData() {
-
+    private ApplicationData()
+    {
+        // Pre-defined users
+        users.add(new User("admin", "admin", true));
     }
 }
