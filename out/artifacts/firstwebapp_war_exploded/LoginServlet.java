@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by yketd on 1-9-2016.
  */
-@WebServlet("login")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println(request.getParameter("username") + request.getParameter("password"));
