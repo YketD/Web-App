@@ -11,6 +11,10 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <a href="login.html">Login Test</a>
+  <a href="addroom.html">addroom Test</a>
+  <a href="fouteinlog.html">fouteinlog Test</a>
+  <a href="huurder.html">huurder Test</a>
+  <a href="registreer.html">registreer Test</a>
   </body>
 </html>
