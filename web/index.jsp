@@ -19,5 +19,8 @@
   <a href="fouteinlog.html">fouteinlog Test</a>
   <a href="huurder.html">huurder Test</a>
   <a href="registreer.html">registreer Test</a>
+  <form method="post" action="/index">
+  <input type="submit">
+    </form>
   </body>
 </html>

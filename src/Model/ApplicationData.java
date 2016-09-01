@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class ApplicationData
 {
     private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<Appartement> appartements = new ArrayList<>();
 
     private static ApplicationData ourInstance = new ApplicationData();
 
@@ -18,11 +19,19 @@ public class ApplicationData
     {
         // Pre-defined users
         users.add(new User("admin", "admin", true));
+
+        appartements.add(new Appartement(2,3000,"Enschede"));
+        appartements.add(new Appartement(4,2000,"Enschede"));
+        appartements.add(new Appartement(6,8000,"Deventer"));
     }
 
     public ArrayList<User> getUsers()
     {
         return users;
+    }
+
+    public ArrayList<Appartement> getAppartements() {
+        return appartements;
     }
 
     public User getUser(String username)
