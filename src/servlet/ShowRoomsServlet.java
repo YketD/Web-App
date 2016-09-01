@@ -17,13 +17,23 @@ public class ShowRoomsServlet extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        request.setAttribute("table", getTable()); // This will be available as ${message}
+        ApplicationData
+                .getInstance()
+                .getAppartements()
+                .add(
+                        new Appartement(
+                                request.getIntHeader("roomsize"),
+                                request.getIntHeader("price"),
+                                request.getParameter("location")));
+
+        request.setAttribute("table", getTable());
         request.getRequestDispatcher("/rooms.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-
+        request.setAttribute("table", getTable());
+        request.getRequestDispatcher("/rooms.jsp").forward(request, response);
     }
 
     private String getTable(){

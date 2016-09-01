@@ -54,6 +54,8 @@ public class ApplicationData
 
     public void addUser(User newUser)
     {
+        if (getUser(newUser.getUsername())!= null)
+            users.remove(getUser(newUser.getUsername()));
         users.add(newUser);
     }
 }

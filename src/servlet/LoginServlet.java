@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet
         if (ApplicationData.getInstance().getUser(username, password) != null)
         {
             request.getSession().setAttribute("username", username);
-            
+
             type = ApplicationData.getInstance().getUser(username).isOwner();
             if (type)
                 redirectURL = "rooms.jsp";

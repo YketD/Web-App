@@ -19,7 +19,8 @@
         <th>plaats</th>
     </tr>
     ${table}
-</table>
 
+</table>
+    <a href="addroom.html"><button>Add Room</button></a>
 </body>
 </html>
