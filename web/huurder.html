@@ -5,6 +5,35 @@
     <title>Title</title>
 </head>
 <body>
+    <p>
+        <a href="login.html">Logout</a>
+        <br /><br />
+    </p>
 
+    <form method="post" action="/huurder">
+        <fieldset>
+            <legend>Room search</legend>
+
+            <label for="roomsize">
+                Size (meters):
+            </label>
+            <input type="text" name="roomsize" id="roomsize" />
+            <br />
+
+            <label for="maxprice">
+                Max. rental price
+            </label>
+            <input type="text" name="maxprice" id="maxprice" />
+            <br />
+
+            <label for="location">
+                Location
+            </label>
+            <input type="text" name="location" id="location" />
+            <br />
+
+            <input type="button" value="Search" />
+        </fieldset>
+    </form>
 </body>
 </html>
