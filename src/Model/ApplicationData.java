@@ -19,4 +19,27 @@ public class ApplicationData
         // Pre-defined users
         users.add(new User("admin", "admin", true));
     }
+
+    public ArrayList<User> getUsers()
+    {
+        return users;
+    }
+
+    public User getUser(String username)
+    {
+        for(User user : users)
+            if (user.getUsername().equals(username))
+                return user;
+
+        return null;
+    }
+
+    public User getUser(String username, String password)
+    {
+        for(User user : users)
+            if (user.getUsername().equals(username) && user.getPassword().equals(password))
+                return user;
+
+        return null;
+    }
 }

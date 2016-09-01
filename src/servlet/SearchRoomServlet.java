@@ -20,8 +20,3 @@ public class SearchRoomServlet extends HttpServlet
         response.sendRedirect("huurder.html");
     }
 }
-
-//String username = request.getParameter("username");
-//(Entities) this.getServletConfig().getServletContext().getAttribute("entities")
-//Model.User user = entities.findUser(username);
-//request.getSession().setAttribute("user", user);

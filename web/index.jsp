@@ -11,6 +11,9 @@
     <title>$Title$</title>
   </head>
   <body>
+  <p>
+    Welkom <%= session.getAttribute("username") %>
+  </p>
   <a href="login.html">Login Test</a>
   <a href="addroom.html">addroom Test</a>
   <a href="fouteinlog.html">fouteinlog Test</a>

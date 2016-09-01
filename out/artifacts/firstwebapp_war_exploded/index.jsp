@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: marce
+  Model.User: marce
   Date: 1/9/2016
   Time: 9:26 AM
   To change this template use File | Settings | File Templates.
@@ -11,6 +11,9 @@
     <title>$Title$</title>
   </head>
   <body>
+  <p>
+    Welkom <%= session.getAttribute("username") %>
+  </p>
   <a href="login.html">Login Test</a>
   <a href="addroom.html">addroom Test</a>
   <a href="fouteinlog.html">fouteinlog Test</a>
