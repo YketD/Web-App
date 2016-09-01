@@ -10,11 +10,16 @@ public class SearchRoomServlet extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-
+        response.sendRedirect("fouteinlog.html");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        response.getWriter().println("Hello	world");
+        response.sendRedirect("huurder.html");
     }
 }
+
+//String username = request.getParameter("username");
+//(Entities) this.getServletConfig().getServletContext().getAttribute("entities")
+//User user = entities.findUser(username);
+//request.getSession().setAttribute("user", user);
