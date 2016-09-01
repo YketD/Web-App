@@ -42,4 +42,9 @@ public class ApplicationData
 
         return null;
     }
+
+    public void addUser(User newUser)
+    {
+        users.add(newUser);
+    }
 }
