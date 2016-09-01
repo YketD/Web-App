@@ -11,6 +11,8 @@
     <title>$Title$</title>
   </head>
   <body>
+
+  <% response.sendRedirect("homepage.html"); %>
   <p>
     Welkom <%= session.getAttribute("username") %>
   </p>

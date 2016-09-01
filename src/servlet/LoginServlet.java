@@ -16,22 +16,31 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet
 {
+    boolean type;
+    String redirectURL;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
+
         if (ApplicationData.getInstance().getUser(username, password) != null)
         {
             request.getSession().setAttribute("username", username);
+            
+            type = ApplicationData.getInstance().getUser(username).isOwner();
+            if (type)
+                redirectURL = "rooms.jsp";
+            else
+                redirectURL = "huurder.html";
         }
         else
         {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("fouteinlog.html");
-            dispatcher.forward(request, response);
+            redirectURL = "fouteinlog.html";
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(redirectURL);
         dispatcher.forward(request, response);
     }
 
