@@ -22,8 +22,8 @@ public class ShowRoomsServlet extends HttpServlet
                 .getAppartements()
                 .add(
                         new Appartement(
-                                request.getIntHeader("roomsize"),
-                                request.getIntHeader("price"),
+                                Integer.parseInt(request.getParameter("roomsize")),
+                                Integer.parseInt(request.getParameter("price")),
                                 request.getParameter("location")));
 
         request.setAttribute("table", getTable());
@@ -42,10 +42,10 @@ public class ShowRoomsServlet extends HttpServlet
         for (Appartement ap: appartements) {
             tablecontent +=
                     "<tr>" +
-                            "            <th>" + ap.getSqrmtr() + "</th>" +
-                            "            <th>" + ap.getMaxprijs() + "</th>" +
-                            "            <th>" + ap.getPlaats() + "</th>" +
-                            "        </tr>";
+                            "<th>" + ap.getSqrmtr() + "</th>" +
+                            "<th>" + ap.getMaxprijs() + "</th>" +
+                            "<th>" + ap.getPlaats() + "</th>" +
+                            "</tr>";
         }
         return tablecontent;
 
