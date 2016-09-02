@@ -52,7 +52,7 @@ public class SearchRoomServlet extends HttpServlet
             if (prijsmax == 0 || prijsmax > ap.getMaxprijs())
                 if (sqrmtrmin == 0 || sqrmtrmin < ap.getSqrmtr())
                     if (sqrmtrmax == 0 || sqrmtrmax > ap.getSqrmtr())
-                        if (location == null || location.equalsIgnoreCase(ap.getPlaats()))
+                        if (location == "" || location.equalsIgnoreCase(ap.getPlaats()))
                             resultAppartements.add(ap);
 
         response.setContentType("text/html");
@@ -77,7 +77,7 @@ public class SearchRoomServlet extends HttpServlet
                 "        <br /><br />\n" +
                 "    </p>\n" +
                 "\n" +
-                "    <form method=\"post\" action=\"/huurder\">\n" +
+                "    <form method=\"get\" action=\"/huurder\">\n" +
                 "        <fieldset>\n" +
                 "            <legend>Room search</legend>\n" +
                 "\n" +
@@ -106,7 +106,8 @@ public class SearchRoomServlet extends HttpServlet
                 "\n" +
                 "            <input type=\"submit\" value=\"Search\" />\n" +
                 "        </fieldset>\n" +
-                "    </form>";
+                "    </form>" +
+                "<table style=\"border: groove\">";
 
         for (Appartement ap: resultappartements) {
             tablecontent +=
