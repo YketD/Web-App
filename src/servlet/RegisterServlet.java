@@ -1,7 +1,8 @@
 package servlet;
 
-import Model.ApplicationData;
-import Model.User;
+import model.Customer;
+import model.Owner;
+import model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet
@@ -20,7 +22,16 @@ public class RegisterServlet extends HttpServlet
         String password = request.getParameter("password");
         String type = request.getParameter("type");
 
-        ApplicationData.getInstance().addUser(new User(username, password, type.equals("s")));
+        if (type.equals("o"))
+        {
+            Owner user = new Owner(username, password);
+            ((ArrayList<User>)getServletContext().getAttribute("users")).add(user);
+        }
+        else
+        {
+            Customer user = new Customer(username, password);
+            ((ArrayList<User>)getServletContext().getAttribute("users")).add(user);
+        }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.html");
         dispatcher.forward(request, response);

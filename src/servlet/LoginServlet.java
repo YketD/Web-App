@@ -1,6 +1,7 @@
 package servlet;
 
-import Model.ApplicationData;
+import model.Owner;
+import model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by yketd on 1-9-2016.
@@ -21,31 +23,37 @@ public class LoginServlet extends HttpServlet
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+        User user = null;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
+        // Find a user matching the given username and password
+        for(User findUser : (ArrayList<User>)getServletContext().getAttribute("users"))
+            if (user.getUsername().equals(username) && user.getPassword().equals(password))
+                user = findUser;
 
-        if (ApplicationData.getInstance().getUser(username, password) != null)
+        // Login if user is found
+        if (user != null)
         {
             request.getSession().setAttribute("username", username);
 
-            type = ApplicationData.getInstance().getUser(username).isOwner();
-            if (type)
-                redirectURL = "rooms.jsp";
+            boolean isOwner = user instanceof Owner;
+            if (isOwner)
+                redirectURL = "WEB-INF/rooms.html";
             else
-                redirectURL = "huurder.html";
+                redirectURL = "WEB-INF/huurder.html";
         }
         else
         {
             redirectURL = "fouteinlog.html";
         }
 
+        // And off we go
         RequestDispatcher dispatcher = request.getRequestDispatcher(redirectURL);
         dispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-
     }
 }

@@ -1,7 +1,6 @@
 package servlet;
 
-import Model.Appartement;
-import Model.ApplicationData;
+import model.Apartment;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,8 +14,8 @@ import java.util.ArrayList;
 @WebServlet("/huurder")
 public class SearchRoomServlet extends HttpServlet
 {
-    ArrayList<Appartement> appartements;
-    ArrayList<Appartement> resultAppartements;
+    ArrayList<Apartment> apartments;
+    ArrayList<Apartment> resultApartments;
 
     int prijsmax, sqrmtrmin, sqrmtrmax;
     String location;
@@ -28,8 +27,8 @@ public class SearchRoomServlet extends HttpServlet
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        appartements = ApplicationData.getInstance().getAppartements();
-        resultAppartements = new ArrayList<>();
+        apartments = (ArrayList<Apartment>) getServletContext().getAttribute("apartments");
+        resultApartments = new ArrayList<>();
 
         try {
             prijsmax = Integer.parseInt(request.getParameter("maxprice"));
@@ -48,21 +47,23 @@ public class SearchRoomServlet extends HttpServlet
         }
         location = request.getParameter("location");
 
-        for (Appartement ap : appartements)
+        /*
+        for (Apartment ap : apartments)
             if (prijsmax == 0 || prijsmax > ap.getMaxprijs())
                 if (sqrmtrmin == 0 || sqrmtrmin < ap.getSqrmtr())
                     if (sqrmtrmax == 0 || sqrmtrmax > ap.getSqrmtr())
                         if (location == "" || location.equalsIgnoreCase(ap.getPlaats()))
-                            resultAppartements.add(ap);
+                            resultApartments.add(ap);
+        */
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println(getSearchResultTable(resultAppartements));
+        out.println(getSearchResultTable(resultApartments));
 
 
     }
 
-    private String getSearchResultTable(ArrayList<Appartement> resultappartements){
+    private String getSearchResultTable(ArrayList<Apartment> resultappartements){
         String tablecontent = "";
 
         tablecontent = "<!DOCTYPE html>\n" +
@@ -81,7 +82,7 @@ public class SearchRoomServlet extends HttpServlet
                 "        <fieldset>\n" +
                 "            <legend>Room search</legend>\n" +
                 "\n" +
-                "            <h3>Appartement size in Square Meters:</h3>\n" +
+                "            <h3>Apartment size in Square Meters:</h3>\n" +
                 "            <label for=\"roomsizeMin\">\n" +
                 "                Min:\n" +
                 "            </label>\n" +
@@ -109,7 +110,8 @@ public class SearchRoomServlet extends HttpServlet
                 "    </form>" +
                 "<table style=\"border: groove\">";
 
-        for (Appartement ap: resultappartements) {
+        /*
+        for (Apartment ap: resultappartements) {
             tablecontent +=
                     "<tr>" +
                             "<th>" + ap.getSqrmtr() + "</th>" +
@@ -117,6 +119,7 @@ public class SearchRoomServlet extends HttpServlet
                             "<th>" + ap.getPlaats() + "</th>" +
                             "</tr>";
         }
+        */
 
         tablecontent += "</table>\n" +
                 "</body>\n" +
