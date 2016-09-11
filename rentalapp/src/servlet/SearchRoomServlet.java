@@ -19,8 +19,6 @@ import java.util.ArrayList;
 public class SearchRoomServlet extends HttpServlet
 {
     private Model model;
-    private boolean isValid = true;
-    private String reasonForFailure;
 
     @Override
     public void init() throws ServletException
@@ -54,6 +52,8 @@ public class SearchRoomServlet extends HttpServlet
 
         String location;
         double priceMax = 0, sizeMin = 0, sizeMax = 0;
+        boolean isValid = true;
+        String reasonForFailure = "";
 
         // The response
         PrintWriter out = response.getWriter();
@@ -66,13 +66,11 @@ public class SearchRoomServlet extends HttpServlet
             }   else{
                 priceMax = -1.0;
             }
-        }catch (Exception n){
+        } catch (Exception n) {
             reasonForFailure = "pricemax \n";
             n.printStackTrace();
             isValid = false;
         }
-
-
 
         try {
             if (request.getParameter("roomsizeMin").length() > 0){
@@ -80,7 +78,7 @@ public class SearchRoomServlet extends HttpServlet
             }   else{
                 sizeMin = -1.0;
             }
-        }catch (Exception n){
+        } catch (Exception n) {
             reasonForFailure = "roomsizemin \n";
             isValid = false;
         }
@@ -91,24 +89,21 @@ public class SearchRoomServlet extends HttpServlet
             }   else{
                 sizeMax = -1.0;
             }
-        }catch (Exception n){
+        } catch (Exception n) {
             reasonForFailure = "roomsizemax \n";
-            n.printStackTrace();
             isValid = false;
         }
 
+        location = request.getParameter("location");
 
-            location = request.getParameter("location");
-        if (!location.isEmpty() && location.matches("[a-zA-Z ]*\\d+.*")){
-            reasonForFailure += "location";
-            isValid = false;
-        }
-        if (!isValid) {
+        if (!isValid)
+        {
             out.print(reasonForFailure);
-            out.print("you're query is not valid .<br /><a href=\"login\">Please try again</a>");
+            out.print("your query is not valid .<br /><a href=\"login\">Please try again</a>");
             return;
-        }   else {
-
+        }
+        else
+        {
             // Set up our room filter
             roomFilter.location(location).priceMax(priceMax).sizeMax(sizeMax).sizeMin(sizeMin);
             apartments = model.getApartments(roomFilter);
