@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class SearchRoomServlet extends HttpServlet
 {
     private Model model;
+    private boolean isValid = true;
+    private String reasonForFailure;
 
     @Override
     public void init() throws ServletException
@@ -51,7 +53,7 @@ public class SearchRoomServlet extends HttpServlet
         RoomFilter roomFilter = new RoomFilter();
 
         String location;
-        double priceMax, sizeMin, sizeMax;
+        double priceMax = 0, sizeMin = 0, sizeMax = 0;
 
         // The response
         PrintWriter out = response.getWriter();
@@ -59,31 +61,61 @@ public class SearchRoomServlet extends HttpServlet
 
         // Attempt to extract query string parameters
         try {
-            priceMax = Double.parseDouble(request.getParameter("maxprice"));
-        } catch (Exception nfe){
-            priceMax = -1.0;
+            if (request.getParameter("maxprice").length() > 0){
+                priceMax = Double.parseDouble(request.getParameter("maxprice"));
+            }   else{
+                priceMax = -1.0;
+            }
+        }catch (Exception n){
+            reasonForFailure = "pricemax \n";
+            n.printStackTrace();
+            isValid = false;
+        }
+
+
+
+        try {
+            if (request.getParameter("roomsizeMin").length() > 0){
+                sizeMin = Double.parseDouble(request.getParameter("roomsizeMin"));
+            }   else{
+                sizeMin = -1.0;
+            }
+        }catch (Exception n){
+            reasonForFailure = "roomsizemin \n";
+            isValid = false;
         }
 
         try {
-            sizeMin = Double.parseDouble(request.getParameter("roomsizeMin"));
-        } catch (Exception nfe){
-            sizeMin = 0.0;
+            if (request.getParameter("roomsizeMax").length() > 0){
+                sizeMax = Double.parseDouble(request.getParameter("roomsizeMax"));
+            }   else{
+                sizeMax = -1.0;
+            }
+        }catch (Exception n){
+            reasonForFailure = "roomsizemax \n";
+            n.printStackTrace();
+            isValid = false;
         }
 
-        try {
-            sizeMax = Double.parseDouble(request.getParameter("roomsizeMax"));
-        } catch (Exception nfe){
-            sizeMax = -1.0;
+
+            location = request.getParameter("location");
+        if (!location.isEmpty() && location.matches("[a-zA-Z ]*\\d+.*")){
+            reasonForFailure += "location";
+            isValid = false;
         }
+        if (!isValid) {
+            out.print(reasonForFailure);
+            out.print("you're query is not valid .<br /><a href=\"login\">Please try again</a>");
+            return;
+        }   else {
 
-        location = request.getParameter("location");
+            // Set up our room filter
+            roomFilter.location(location).priceMax(priceMax).sizeMax(sizeMax).sizeMin(sizeMin);
+            apartments = model.getApartments(roomFilter);
 
-        // Set up our room filter
-        roomFilter.location(location).priceMax(priceMax).sizeMax(sizeMax).sizeMin(sizeMin);
-        apartments = model.getApartments(roomFilter);
-
-        // Show what we got
-        out.print("<a href=\"/login\">Back to search</a> // <a href=\"/logout\">Logout</a><br /><br />");
-        out.print(model.apartmentsToHTML(apartments));
+            // Show what we got
+            out.print("<a href=\"/login\">Back to search</a> // <a href=\"/logout\">Logout</a><br /><br />");
+            out.print(model.apartmentsToHTML(apartments));
+        }
     }
 }
